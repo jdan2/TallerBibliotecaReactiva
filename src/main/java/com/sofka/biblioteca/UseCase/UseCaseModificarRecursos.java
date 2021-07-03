@@ -20,8 +20,11 @@ public class UseCaseModificarRecursos {
         this.mapperRecursos = mapperRecursos;
     }
 
-
-    public Flux<RecursosDTO> get() {
-        return repositorioRecursos.findAll().map(mapperRecursos.mapRecursoToDTO());
+    public Mono<String> modify(RecursosDTO recursosDTO){
+        return
+                repositorioRecursos.save(mapperRecursos
+                        .mapperToRecurso(recursosDTO.getId())
+                        .apply(recursosDTO))
+                        .map(Recursos::getId);
     }
 }

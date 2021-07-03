@@ -19,10 +19,10 @@ public class RouterCrearRecursos {
     public RouterFunction<ServerResponse> createRecurso(UseCaseCrearRecursos useCaseCrearRecursos){
         return route(POST("/crear").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(RecursosDTO.class)
-        .flatMap(recursosDTO -> useCaseCrearRecursos.apply(recursosDTO)
-        .flatMap(result-> ServerResponse.ok()
-        .contentType(MediaType.TEXT_PLAIN)
-        .bodyValue(result))
+                .flatMap(recursosDTO -> useCaseCrearRecursos.apply(recursosDTO)
+                  .flatMap(result-> ServerResponse.ok()
+                       .contentType(MediaType.TEXT_PLAIN)
+                         .bodyValue(result))
         )
         );
     }
