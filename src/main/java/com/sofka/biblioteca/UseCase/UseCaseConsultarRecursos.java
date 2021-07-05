@@ -3,6 +3,7 @@ package com.sofka.biblioteca.UseCase;
 import com.sofka.biblioteca.Mapper.MapperRecursos;
 import com.sofka.biblioteca.dto.RecursosDTO;
 import com.sofka.biblioteca.repository.RepositorioRecursos;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
@@ -16,6 +17,7 @@ public class UseCaseConsultarRecursos implements Supplier <Flux<RecursosDTO>>{
     private final RepositorioRecursos repositorioRecursos;
     private final MapperRecursos mapperRecursos;
 
+    @Autowired
     public UseCaseConsultarRecursos(RepositorioRecursos repositorioRecursos, MapperRecursos mapperRecursos) {
         this.repositorioRecursos = repositorioRecursos;
         this.mapperRecursos = mapperRecursos;
