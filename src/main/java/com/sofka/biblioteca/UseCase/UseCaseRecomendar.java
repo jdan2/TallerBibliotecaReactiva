@@ -3,28 +3,22 @@ package com.sofka.biblioteca.UseCase;
 import com.sofka.biblioteca.Mapper.MapperRecursos;
 import com.sofka.biblioteca.dto.RecursosDTO;
 import com.sofka.biblioteca.repository.RepositorioRecursos;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
 
-import java.util.function.Supplier;
-
 @Service
 @Validated
-public class UseCaseConsultarRecursos implements Supplier <Flux<RecursosDTO>>{
-
+public class UseCaseRecomendar {
     private final RepositorioRecursos repositorioRecursos;
     private final MapperRecursos mapperRecursos;
 
-    @Autowired
-    public UseCaseConsultarRecursos(RepositorioRecursos repositorioRecursos, MapperRecursos mapperRecursos) {
+    public UseCaseRecomendar(RepositorioRecursos repositorioRecursos, MapperRecursos mapperRecursos) {
         this.repositorioRecursos = repositorioRecursos;
         this.mapperRecursos = mapperRecursos;
-    }  
+    }
 
-    @Override
-    public Flux<RecursosDTO> get() {
-        return repositorioRecursos.findAll().map(mapperRecursos.mapRecursoToDTO());
+    public Flux<RecursosDTO> recomendar( String idArea){
+        return repositorioRecursos.findRecursosByidArea(idArea).map(mapperRecursos.mapRecursoToDTO());
     }
 }
