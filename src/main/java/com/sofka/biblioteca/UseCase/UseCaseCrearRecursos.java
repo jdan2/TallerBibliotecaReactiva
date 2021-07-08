@@ -20,11 +20,11 @@ public class UseCaseCrearRecursos {
         this.mapperRecursos = mapperRecursos;
     }
 
-    public Mono<String> apply(RecursosDTO recursosDTO){
+    public Mono<RecursosDTO> apply(RecursosDTO recursosDTO){
         var respuesta = repositorioRecursos
                 .save(mapperRecursos.mapperToRecurso(null)
                         .apply(recursosDTO))
-                            .map(Recursos::getId);
+                            .map(mapperRecursos.mapRecursoToDTO());
         return respuesta;
     }
 

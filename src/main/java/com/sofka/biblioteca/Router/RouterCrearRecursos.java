@@ -21,7 +21,6 @@ public class RouterCrearRecursos {
                 request -> request.bodyToMono(RecursosDTO.class)
                 .flatMap(recursosDTO -> useCaseCrearRecursos.apply(recursosDTO)
                   .flatMap(result-> ServerResponse.ok()
-                       .contentType(MediaType.TEXT_PLAIN)
                          .bodyValue(result))
         )
         );
