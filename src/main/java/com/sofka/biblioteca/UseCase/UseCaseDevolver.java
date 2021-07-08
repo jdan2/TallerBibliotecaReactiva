@@ -15,8 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Validated
-public class UseCasePrestarRecurso {
-
+public class UseCaseDevolver {
     private Date fechaActual = new Date();
     private String strDateFormat = "hh: mm: ss a dd-MMM-aaaa";
     private SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
@@ -26,29 +25,28 @@ public class UseCasePrestarRecurso {
     private final MapperRespuesta mapperRespuesta;
 
     @Autowired
-    public UseCasePrestarRecurso(RepositorioRecursos repositorioRecursos, MapperRecursos mapperRecursos, MapperRespuesta mapperRespuesta) {
+    public UseCaseDevolver(RepositorioRecursos repositorioRecursos, MapperRecursos mapperRecursos, MapperRespuesta mapperRespuesta) {
         this.repositorioRecursos = repositorioRecursos;
         this.mapperRecursos = mapperRecursos;
         this.mapperRespuesta = mapperRespuesta;
     }
 
-    public Mono<RespuestaDTO> prestar(String id){
+    public Mono<RespuestaDTO> devolver(String id){
         var respuesta = repositorioRecursos.findById(id);
 
-        var mensaje = new AtomicReference<>("Fue prestado");
+        var mensaje = new AtomicReference<>("Fue Devuelto");
 
-     var resp = respuesta.flatMap(rs->{
+        var resp = respuesta.flatMap(rs->{
             if(rs.getDisponible()){
-                rs.setDisponible(false);
+                rs.setDisponible(true);
                 rs.setFechaPrestamo(objSDF.format(fechaActual));
 
             }
-            mensaje.set("Esta prestado");
+            mensaje.set("No puedes devoler algo que no esta prestado");
             return  repositorioRecursos.save(rs);
 
         });
 
-
-        return resp.map(mapperRespuesta.Prestar(mensaje.get()));
+        return resp.map(mapperRespuesta.Devovler(mensaje.get()));
     }
 }

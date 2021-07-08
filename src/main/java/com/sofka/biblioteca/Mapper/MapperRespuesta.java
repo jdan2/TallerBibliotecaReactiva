@@ -44,4 +44,16 @@ public class MapperRespuesta {
 
         };
     }
+
+    public Function<Recursos, RespuestaDTO> Devovler(String mensaje){
+        return recursoprestamo ->{
+            var respuestaDTO = new RespuestaDTO();
+
+            respuestaDTO.setFechaPrestamo(recursoprestamo.getFechaPrestamo());
+            respuestaDTO.setDisponible(true);
+            respuestaDTO.setMensaje(mensaje);
+            return respuestaDTO;
+
+        };
+    }
 }
